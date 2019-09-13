@@ -22,7 +22,7 @@ namespace Calculator
     {
 
         float answer;
-        float temp1;
+        string temp1Str;
         string temp2Str;
         int whatOperator;
         bool answerMade = false;
@@ -47,7 +47,6 @@ namespace Calculator
         public MainWindow()
         {
             InitializeComponent();
-            temp1 = 0;
         }
 
         private void _1btn_Click(object sender, RoutedEventArgs e)
@@ -57,6 +56,10 @@ namespace Calculator
             if(opNo == 2)
             {
                 temp2Str += "1";
+            }
+            else
+            {
+                temp1Str += "1";
             }
         }
 
@@ -68,6 +71,10 @@ namespace Calculator
             {
                 temp2Str += "2";
             }
+            else
+            {
+                temp1Str += "2";
+            }
         }
 
         private void _3btn_Click(object sender, RoutedEventArgs e)
@@ -77,6 +84,10 @@ namespace Calculator
             if (opNo == 2)
             {
                 temp2Str += "3";
+            }
+            else
+            {
+                temp1Str += "3";
             }
         }
 
@@ -88,6 +99,10 @@ namespace Calculator
             {
                 temp2Str += "4";
             }
+            else
+            {
+                temp1Str += "4";
+            }
         }
 
         private void _5btn_Click(object sender, RoutedEventArgs e)
@@ -97,6 +112,10 @@ namespace Calculator
             if (opNo == 2)
             {
                 temp2Str += "5";
+            }
+            else
+            {
+                temp1Str += "5";
             }
         }
 
@@ -108,6 +127,10 @@ namespace Calculator
             {
                 temp2Str += "6";
             }
+            else
+            {
+                temp1Str += "6";
+            }
         }
 
         private void _7btn_Click(object sender, RoutedEventArgs e)
@@ -117,6 +140,10 @@ namespace Calculator
             if (opNo == 2)
             {
                 temp2Str += "7";
+            }
+            else
+            {
+                temp1Str += "7";
             }
         }
 
@@ -128,6 +155,10 @@ namespace Calculator
             {
                 temp2Str += "8";
             }
+            else
+            {
+                temp1Str += "8";
+            }
         }
 
         private void _9btn_Click(object sender, RoutedEventArgs e)
@@ -138,6 +169,10 @@ namespace Calculator
             {
                 temp2Str += "9";
             }
+            else
+            {
+                temp1Str += "9";
+            }
         }
 
         private void _0btn_Click(object sender, RoutedEventArgs e)
@@ -147,6 +182,10 @@ namespace Calculator
             if (opNo == 2)
             {
                 temp2Str += "0";
+            }
+            else
+            {
+                temp1Str += "0";
             }
         }
 
@@ -160,10 +199,11 @@ namespace Calculator
                 ChangeShiftAlpha();
                 if (opNo == 1)
                 {
-                    temp1 = float.Parse(Answertxt.Text);
-                    AnswerBoxtxt.Text = temp1.ToString();
-                    answer = temp1;
+                    //temp1 = float.Parse(Answertxt.Text);
+                    AnswerBoxtxt.Text = temp1Str;
+                    answer = float.Parse(temp1Str);
                     Answertxt.Text = "";
+                    temp1Str = "";
                     temp2Str = "";
                 }
                 else
@@ -192,23 +232,24 @@ namespace Calculator
                 if (Answertxt.Text == "")
                 {
                     Answertxt.Text = answer.ToString();
+                    temp1Str = answer.ToString();
                 }
                 if (opNo < 2)
                 {
                     whatOperator = 2;
-                    if (opNo == 1)
-                    {
-                        temp1 = float.Parse(Answertxt.Text);
-                    }
+                    //if (opNo == 1)
+                    //{
+                    //    temp1 = float.Parse(Answertxt.Text);
+                    //}
                     opNo += 1;
                     Answertxt.Text += " - ";
                     answerMade = false;
                 }
                 else
                 {
-                    temp1 = FindCalc(temp1, float.Parse(temp2Str));
+                    temp1Str = (FindCalc(float.Parse(temp1Str), float.Parse(temp2Str))).ToString();
                     temp2Str = "";
-                    Answertxt.Text = temp1.ToString();
+                    Answertxt.Text = temp1Str;
                     opNo = 2;
                     whatOperator = 2;
                     Answertxt.Text += " - ";
@@ -228,24 +269,21 @@ namespace Calculator
             {
                 if (Answertxt.Text == "")
                 {
+                    temp1Str = answer.ToString();
                     Answertxt.Text = answer.ToString();
                 }
                 if (opNo < 2)
                 {
                     whatOperator = 1;
-                    if (opNo == 1)
-                    {
-                        temp1 = float.Parse(Answertxt.Text);
-                    }
                     opNo += 1;
                     Answertxt.Text += " + ";
                     answerMade = false;
                 }
                 else
                 {
-                    temp1 = FindCalc(temp1, float.Parse(temp2Str));
+                    temp1Str = (FindCalc(float.Parse(temp1Str), float.Parse(temp2Str))).ToString();
                     temp2Str = "";
-                    Answertxt.Text = temp1.ToString();
+                    Answertxt.Text = temp1Str;
                     opNo = 2;
                     whatOperator = 1;
                     Answertxt.Text += " + ";
@@ -266,6 +304,10 @@ namespace Calculator
             {
                 temp2Str += ".";
             }
+            else
+            {
+                temp1Str += ".";
+            }
         }
 
         private void Equals()
@@ -275,36 +317,36 @@ namespace Calculator
                 switch(whatOperator)
                 {
                     case 1:
-                        temp1 = (temp1 + float.Parse(temp2Str));
-                        AnswerBoxtxt.Text = (temp1).ToString();
+                        temp1Str = (float.Parse(temp1Str) + float.Parse(temp2Str)).ToString();
+                        AnswerBoxtxt.Text = temp1Str;
                         break;
                     case 2:
-                        temp1 = (temp1 - float.Parse(temp2Str));
-                        AnswerBoxtxt.Text = (temp1).ToString();
+                        temp1Str = (float.Parse(temp1Str) - float.Parse(temp2Str)).ToString();
+                        AnswerBoxtxt.Text = temp1Str;
                         break;
                     case 3:
-                        temp1 = (temp1 * float.Parse(temp2Str));
-                        AnswerBoxtxt.Text = (temp1).ToString();
+                        temp1Str = (float.Parse(temp1Str) * float.Parse(temp2Str)).ToString();
+                        AnswerBoxtxt.Text = temp1Str;
                         break;
                     case 4:
-                        temp1 = (temp1 / float.Parse(temp2Str));
-                        AnswerBoxtxt.Text = (temp1).ToString();
+                        temp1Str = (float.Parse(temp1Str) / float.Parse(temp2Str)).ToString();
+                        AnswerBoxtxt.Text = temp1Str;
                         break;
                     case 5:
-                        temp1 = (temp1 % float.Parse(temp2Str));
-                        AnswerBoxtxt.Text = (temp1).ToString();
+                        temp1Str = (float.Parse(temp1Str) % float.Parse(temp2Str)).ToString();
+                        AnswerBoxtxt.Text = temp1Str;
                         break;
                     case 6:
-                        double tempDouble = temp1;
-                        temp1 = (float)(Math.Pow(temp1, double.Parse(temp2Str)));
-                        AnswerBoxtxt.Text = (temp1).ToString();
+                        double tempDouble = double.Parse(temp1Str);
+                        temp1Str = (Math.Pow(double.Parse(temp1Str), double.Parse(temp2Str))).ToString();
+                        AnswerBoxtxt.Text = temp1Str;
                         break;
                     default:
                         break;
                 }
-                answer = temp1;
+                answer = float.Parse(temp1Str);
                 Answertxt.Text = "";
-                temp1 = 0;
+                temp1Str = "";
                 temp2Str = "";
                 opNo = 1;
                 answerMade = true;
@@ -332,24 +374,21 @@ namespace Calculator
             {
                 if (Answertxt.Text == "")
                 {
+                    temp1Str = answer.ToString();
                     Answertxt.Text = answer.ToString();
                 }
                 if (opNo < 2)
                 {
                     whatOperator = 3;
-                    if (opNo == 1)
-                    {
-                        temp1 = float.Parse(Answertxt.Text);
-                    }
                     opNo += 1;
                     Answertxt.Text += " * ";
                     answerMade = false;
                 }
                 else
                 {
-                    temp1 = FindCalc(temp1, float.Parse(temp2Str));
+                    temp1Str = (FindCalc(float.Parse(temp1Str), float.Parse(temp2Str))).ToString();
                     temp2Str = "";
-                    Answertxt.Text = temp1.ToString();
+                    Answertxt.Text = temp1Str;
                     opNo = 2;
                     whatOperator = 3;
                     Answertxt.Text += " * ";
@@ -370,23 +409,20 @@ namespace Calculator
                 if (Answertxt.Text == "")
                 {
                     Answertxt.Text = answer.ToString();
+                    temp1Str = answer.ToString();
                 }
                 if (opNo < 2)
                 {
                     whatOperator = 4;
-                    if (opNo == 1)
-                    {
-                        temp1 = float.Parse(Answertxt.Text);
-                    }
                     opNo += 1;
                     Answertxt.Text += " / ";
                     answerMade = false;
                 }
                 else
                 {
-                    temp1 = FindCalc(temp1, float.Parse(temp2Str));
+                    temp1Str = (FindCalc(float.Parse(temp1Str), float.Parse(temp2Str))).ToString();
                     temp2Str = "";
-                    Answertxt.Text = temp1.ToString();
+                    Answertxt.Text = temp1Str;
                     opNo = 2;
                     whatOperator = 4;
                     Answertxt.Text += " / ";
@@ -406,13 +442,13 @@ namespace Calculator
             shiftTrue = false;
             alphaTrue = false;
             ChangeShiftAlpha();
-            temp1 = 0;
+            temp1Str = "";
             temp2Str = "";
             opNo = 1;
             AnswerBoxtxt.Text = "";
             answerMade = true;
         }
-
+        
         private void Ansbtn_Click(object sender, RoutedEventArgs e)
         {
             TextChange();
@@ -421,7 +457,7 @@ namespace Calculator
                 Answertxt.Text += answer.ToString();
                 if(opNo == 1)
                 {
-                    temp1 = answer;
+                    temp1Str = answer.ToString();
                 }
                 else
                 {
@@ -442,23 +478,20 @@ namespace Calculator
             {
                 if(Answertxt.Text == "")
                 {
+                    temp1Str = answer.ToString();
                     Answertxt.Text = answer.ToString();
                 }
                 if (opNo < 2)
                 {
                     whatOperator = 5;
-                    if (opNo == 1)
-                    {
-                        temp1 = float.Parse(Answertxt.Text);
-                    }
                     opNo += 1;
                     Answertxt.Text += " % ";
                 }
                 else
                 {
-                    temp1 = FindCalc(temp1, float.Parse(temp2Str));
+                    temp1Str = (FindCalc(float.Parse(temp1Str), float.Parse(temp2Str))).ToString();
                     temp2Str = "";
-                    Answertxt.Text = temp1.ToString();
+                    Answertxt.Text = temp1Str;
                     opNo = 2;
                     whatOperator = 5;
                     Answertxt.Text += " % ";
@@ -511,18 +544,18 @@ namespace Calculator
             {
                 if (Answertxt.Text == "")
                 {
+                    temp1Str = answer.ToString();
                     Answertxt.Text = answer.ToString();
                 }
                 if (opNo == 1)
                 {
-                    temp1 = float.Parse(Answertxt.Text);
-                    temp1 = 1 / temp1;
-                    Answertxt.Text = temp1.ToString();
+                    temp1Str = (1 / float.Parse(temp1Str)).ToString();
+                    Answertxt.Text = temp1Str;
                 }
                 else if (opNo == 2)
                 {
                     temp2Str = (1 / (float.Parse(temp2Str))).ToString();
-                    Answertxt.Text = temp1.ToString();
+                    Answertxt.Text = temp1Str;
                     switch (whatOperator)
                     {
                         case 1:
@@ -570,17 +603,17 @@ namespace Calculator
                 if (Answertxt.Text == "")
                 {
                     Answertxt.Text = answer.ToString();
+                    temp1Str = answer.ToString();
                 }
                 if (opNo == 1)
                 {
-                    temp1 = float.Parse(Answertxt.Text);
-                    temp1 = -temp1;
-                    Answertxt.Text = temp1.ToString();
+                    temp1Str = (-(float.Parse(temp1Str))).ToString();
+                    Answertxt.Text = temp1Str;
                 }
                 else if (opNo == 2)
                 {
                     temp2Str = (-(float.Parse(temp2Str))).ToString();
-                    Answertxt.Text = temp1.ToString();
+                    Answertxt.Text = temp1Str;
                     switch (whatOperator)
                     {
                         case 1:
@@ -651,19 +684,19 @@ namespace Calculator
                 {
                     if (Answertxt.Text == "")
                     {
+                        temp1Str = answer.ToString();
                         Answertxt.Text = answer.ToString();
                     }
                     if (opNo == 1)
                     {
-                        temp1 = float.Parse(Answertxt.Text);
-                        double tempDouble = temp1;
-                        temp1 = (float)Math.Sqrt(tempDouble);
-                        Answertxt.Text = temp1.ToString();
+                        double tempDouble = double.Parse(temp1Str);
+                        temp1Str = Math.Sqrt(tempDouble).ToString();
+                        Answertxt.Text = temp1Str;
                     }
                     else if (opNo == 2)
                     {
                         temp2Str = Math.Sqrt(double.Parse(temp2Str)).ToString();
-                        Answertxt.Text = temp1.ToString();
+                        Answertxt.Text = temp1Str;
                         switch (whatOperator)
                         {
                             case 1:
@@ -736,21 +769,21 @@ namespace Calculator
                 {
                     if (Answertxt.Text == "")
                     {
+                        temp1Str = answer.ToString();
                         Answertxt.Text = answer.ToString();
                     }
                     if (opNo == 1)
                     {
-                        temp1 = float.Parse(Answertxt.Text);
                         //Answertxt.Text = "√" + temp1.ToString();
-                        double tempDouble = temp1;
-                        temp1 = (float)Math.Round(tempDouble);
-                        Answertxt.Text = temp1.ToString();
+                        double tempDouble = double.Parse(temp1Str);
+                        temp1Str = Math.Round(tempDouble).ToString();
+                        Answertxt.Text = temp1Str;
                     }
                     else if (opNo == 2)
                     {
                         //Answertxt.Text += "√" + temp2Str;
                         temp2Str = Math.Round(double.Parse(temp2Str)).ToString();
-                        Answertxt.Text = temp1.ToString();
+                        Answertxt.Text = temp1Str;
                         switch (whatOperator)
                         {
                             case 1:
@@ -824,20 +857,20 @@ namespace Calculator
                     if (Answertxt.Text == "")
                     {
                         Answertxt.Text = answer.ToString();
+                        temp1Str = answer.ToString();
                     }
                     if (opNo == 1)
                     {
-                        temp1 = float.Parse(Answertxt.Text);
                         //Answertxt.Text = "√" + temp1.ToString();
-                        double tempDouble = temp1;
-                        temp1 = (float)Math.Floor(tempDouble);
-                        Answertxt.Text = temp1.ToString();
+                        double tempDouble = double.Parse(temp1Str);
+                        temp1Str = Math.Floor(tempDouble).ToString();
+                        Answertxt.Text = temp1Str;
                     }
                     else if (opNo == 2)
                     {
                         //Answertxt.Text += "√" + temp2Str;
                         temp2Str = Math.Floor(double.Parse(temp2Str)).ToString();
-                        Answertxt.Text = temp1.ToString();
+                        Answertxt.Text = temp1Str;
                         switch (whatOperator)
                         {
                             case 1:
@@ -969,24 +1002,21 @@ namespace Calculator
             {
                 if (Answertxt.Text == "")
                 {
+                    temp1Str = answer.ToString();
                     Answertxt.Text = answer.ToString();
                 }
                 if (opNo < 2)
                 {
                     whatOperator = 6;
-                    if (opNo == 1)
-                    {
-                        temp1 = float.Parse(Answertxt.Text);
-                    }
                     opNo += 1;
                     Answertxt.Text += " ^ ";
                     answerMade = false;
                 }
                 else
                 {
-                    temp1 = FindCalc(temp1, float.Parse(temp2Str));
+                    temp1Str = (FindCalc(float.Parse(temp1Str), float.Parse(temp2Str))).ToString();
                     temp2Str = "";
-                    Answertxt.Text = temp1.ToString();
+                    Answertxt.Text = temp1Str;
                     opNo = 2;
                     whatOperator = 6;
                     Answertxt.Text += " ^ ";
@@ -1008,19 +1038,19 @@ namespace Calculator
                 {
                     if (Answertxt.Text == "")
                     {
+                        temp1Str = answer.ToString();
                         Answertxt.Text = answer.ToString();
                     }
                     if (opNo == 1)
                     {
-                        temp1 = float.Parse(Answertxt.Text);
-                        double tempDouble = temp1;
-                        temp1 = (float)Math.Atan(tempDouble) * (float)(180 / Math.PI);
-                        Answertxt.Text = temp1.ToString();
+                        double tempDouble = double.Parse(temp1Str);
+                        temp1Str = (Math.Atan(tempDouble) * (float)(180 / Math.PI)).ToString();
+                        Answertxt.Text = temp1Str;
                     }
                     else if (opNo == 2)
                     {
                         temp2Str = (Math.Atan(double.Parse(temp2Str)) * (180 / Math.PI)).ToString();
-                        Answertxt.Text = temp1.ToString();
+                        Answertxt.Text = temp1Str;
                         switch (whatOperator)
                         {
                             case 1:
@@ -1057,20 +1087,20 @@ namespace Calculator
                 {
                     if (Answertxt.Text == "")
                     {
+                        temp1Str = answer.ToString();
                         Answertxt.Text = answer.ToString();
                     }
                     if (opNo == 1)
                     {
-                        temp1 = float.Parse(Answertxt.Text);
-                        double tempDouble = temp1;
+                        double tempDouble = double.Parse(temp1Str);
                         tempDouble = tempDouble * Math.PI / 180;
-                        temp1 = (float)Math.Tan(tempDouble);
-                        Answertxt.Text = temp1.ToString();
+                        temp1Str = Math.Tan(tempDouble).ToString();
+                        Answertxt.Text = temp1Str;
                     }
                     else if (opNo == 2)
                     {
                         temp2Str = Math.Tan(double.Parse(temp2Str) * Math.PI / 180).ToString();
-                        Answertxt.Text = temp1.ToString();
+                        Answertxt.Text = temp1Str;
                         switch (whatOperator)
                         {
                             case 1:
@@ -1122,19 +1152,19 @@ namespace Calculator
                 {
                     if (Answertxt.Text == "")
                     {
+                        temp1Str = answer.ToString();
                         Answertxt.Text = answer.ToString();
                     }
                     if (opNo == 1)
                     {
-                        temp1 = float.Parse(Answertxt.Text);
-                        double tempDouble = temp1;
-                        temp1 = (float)Math.Asin(tempDouble) * (float)(180 / Math.PI);
-                        Answertxt.Text = temp1.ToString();
+                        double tempDouble = double.Parse(temp1Str);
+                        temp1Str = (Math.Asin(tempDouble) * (float)(180 / Math.PI)).ToString();
+                        Answertxt.Text = temp1Str;
                     }
                     else if (opNo == 2)
                     {
                         temp2Str = (Math.Asin(double.Parse(temp2Str)) * (180 / Math.PI)).ToString();
-                        Answertxt.Text = temp1.ToString();
+                        Answertxt.Text = temp1Str;
                         switch (whatOperator)
                         {
                             case 1:
@@ -1171,20 +1201,20 @@ namespace Calculator
                 {
                     if (Answertxt.Text == "")
                     {
+                        temp1Str = answer.ToString();
                         Answertxt.Text = answer.ToString();
                     }
                     if (opNo == 1)
                     {
-                        temp1 = float.Parse(Answertxt.Text);
-                        double tempDouble = temp1;
+                        double tempDouble = double.Parse(temp1Str);
                         tempDouble = tempDouble * Math.PI / 180;
-                        temp1 = (float)Math.Sin(tempDouble);
-                        Answertxt.Text = temp1.ToString();
+                        temp1Str = Math.Sin(tempDouble).ToString();
+                        Answertxt.Text = temp1Str;
                     }
                     else if (opNo == 2)
                     {
                         temp2Str = Math.Sin(double.Parse(temp2Str) * Math.PI / 180).ToString();
-                        Answertxt.Text = temp1.ToString();
+                        Answertxt.Text = temp1Str;
                         switch (whatOperator)
                         {
                             case 1:
@@ -1236,19 +1266,19 @@ namespace Calculator
                 {
                     if (Answertxt.Text == "")
                     {
+                        temp1Str = answer.ToString();
                         Answertxt.Text = answer.ToString();
                     }
                     if (opNo == 1)
                     {
-                        temp1 = float.Parse(Answertxt.Text);
-                        double tempDouble = temp1;
-                        temp1 = (float)Math.Acos(tempDouble) * (float)(180 / Math.PI);
-                        Answertxt.Text = temp1.ToString();
+                        double tempDouble = double.Parse(temp1Str);
+                        temp1Str = (Math.Acos(tempDouble) * (float)(180 / Math.PI)).ToString();
+                        Answertxt.Text = temp1Str;
                     }
                     else if (opNo == 2)
                     {
                         temp2Str = (Math.Acos(double.Parse(temp2Str)) * (180 / Math.PI)).ToString();
-                        Answertxt.Text = temp1.ToString();
+                        Answertxt.Text = temp1Str;
                         switch (whatOperator)
                         {
                             case 1:
@@ -1285,20 +1315,20 @@ namespace Calculator
                 {
                     if (Answertxt.Text == "")
                     {
+                        temp1Str = answer.ToString();
                         Answertxt.Text = answer.ToString();
                     }
                     if (opNo == 1)
                     {
-                        temp1 = float.Parse(Answertxt.Text);
-                        double tempDouble = temp1;
+                        double tempDouble = double.Parse(temp1Str);
                         tempDouble = tempDouble * Math.PI / 180;
-                        temp1 = (float)Math.Cos(tempDouble);
-                        Answertxt.Text = temp1.ToString();
+                        temp1Str = Math.Cos(tempDouble).ToString();
+                        Answertxt.Text = temp1Str;
                     }
                     else if (opNo == 2)
                     {
                         temp2Str = Math.Cos(double.Parse(temp2Str) * Math.PI / 180).ToString();
-                        Answertxt.Text = temp1.ToString();
+                        Answertxt.Text = temp1Str;
                         switch (whatOperator)
                         {
                             case 1:
@@ -1388,17 +1418,18 @@ namespace Calculator
                         if (Answertxt.Text == "")
                         {
                             Answertxt.Text = answer.ToString();
+                            temp1Str = answer.ToString();
                         }
                         if (opNo == 1)
                         {
-                            temp1 = float.Parse(Answertxt.Text);
                             float tempFact = 1;
-                            for (int i = 1; i < temp1 + 1; i++)
+                            for (int i = 1; i < float.Parse(temp1Str) + 1; i++)
                             {
                                 tempFact *= i;
                             }
-                            temp1 = tempFact;
-                            Answertxt.Text = temp1.ToString();
+                            temp1Str = tempFact.ToString();
+                            Answertxt.Text += "!";
+                            //Answertxt.Text = temp1Str;
                         }
                         else if (opNo == 2)
                         {
@@ -1409,7 +1440,9 @@ namespace Calculator
                             }
                             //temp2Str = Math.Floor(double.Parse(temp2Str)).ToString();
                             temp2Str = tempFact.ToString();
-                            Answertxt.Text = temp1.ToString();
+                            Answertxt.Text += "!";
+                            //Answertxt.Text = temp1Str;
+                            /*
                             switch (whatOperator)
                             {
                                 case 1:
@@ -1433,7 +1466,8 @@ namespace Calculator
                                 default:
                                     break;
                             }
-                            Answertxt.Text += temp2Str;
+                             */
+                            //Answertxt.Text += temp2Str;
                         }
                     }
                 }
