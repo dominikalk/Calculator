@@ -21,11 +21,22 @@ namespace Calculator
     public partial class MainWindow : Window
     {
 
+        /* I know that this calculator doesnt have too many features but i spend most of my time coding it so that you could
+          have two munbers visible on the screen to make it look nicer. I tried to add as much error catching as i could but there is bound to be some that slipped through my fingers
+          I suggest that you try out using the store button, the recall button and the "not a game" button :)
+
+           I could have not used global variables, and instead passed in the values, that is how i would improve the code itself
+
+        Sorry if i havent commented enough
+
+        trig functions, square root and factorial have to pressed after the number you want to apply it to
+        */
+
         float answer;
         string temp1Str;
         string temp2Str;
-        int whatOperator;
         bool answerMade = false;
+        int whatOperator;
         // 1 = plus
         // 2 = minus
         // 3 = *
@@ -38,6 +49,7 @@ namespace Calculator
         bool shiftTrue;
         bool alphaTrue;
 
+        // stored custom values
         float aVal;
         float bVal;
         float xVal;
@@ -49,10 +61,13 @@ namespace Calculator
             InitializeComponent();
         }
 
+        // all the number clicks
         private void _1btn_Click(object sender, RoutedEventArgs e)
         {
             TextChange();
             Answertxt.Text = Answertxt.Text + "1";
+            // checks if there is an operator and depending on if there is it will put the two strings together
+            // i realise now that opNo could have been a boolean but at the time i thought of adding 2 operators at the same time but decided not to because i dont like bodmas
             if(opNo == 2)
             {
                 temp2Str += "1";
@@ -193,13 +208,13 @@ namespace Calculator
         {
             try
             {
+                // resets everything
                 alphaTrue = false;
                 shiftTrue = false;
                 storeTrue = false;
                 ChangeShiftAlpha();
                 if (opNo == 1)
                 {
-                    //temp1 = float.Parse(Answertxt.Text);
                     AnswerBoxtxt.Text = temp1Str;
                     answer = float.Parse(temp1Str);
                     Answertxt.Text = "";
@@ -208,11 +223,13 @@ namespace Calculator
                 }
                 else
                 {
+                    // equals() does the calclations - like an ALU
                     Equals();
                 }
             }
             catch
             {
+                // error catching
                 Answertxt.Text = "Syntax Error";
                 ResetAll();
                 answerMade = true;
@@ -231,22 +248,20 @@ namespace Calculator
             {
                 if (Answertxt.Text == "")
                 {
+                    // if text is empty it automatically puts the resultof the last calculation 
                     Answertxt.Text = answer.ToString();
                     temp1Str = answer.ToString();
                 }
                 if (opNo < 2)
                 {
                     whatOperator = 2;
-                    //if (opNo == 1)
-                    //{
-                    //    temp1 = float.Parse(Answertxt.Text);
-                    //}
                     opNo += 1;
                     Answertxt.Text += " - ";
                     answerMade = false;
                 }
                 else
                 {
+                    // find calc is kind of similar to equals()
                     temp1Str = (FindCalc(float.Parse(temp1Str), float.Parse(temp2Str))).ToString();
                     temp2Str = "";
                     Answertxt.Text = temp1Str;
@@ -263,6 +278,7 @@ namespace Calculator
             }
         }
 
+        // everything is basically repeated at this point
         private void Plusbtn_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -314,6 +330,7 @@ namespace Calculator
         {
             try
             {
+                // switch case statement figures out what operator to use in the calculation
                 switch(whatOperator)
                 {
                     case 1:
@@ -361,6 +378,7 @@ namespace Calculator
 
         private void TextChange()
         {
+            // called to make sure the text box is clear after a calculation
             if(answerMade == true)
             {
                 Answertxt.Text = "";
@@ -368,6 +386,7 @@ namespace Calculator
             }
         }
 
+        // all the same stuff, just repeated
         private void Timesbtn_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -436,6 +455,7 @@ namespace Calculator
             }
         }
 
+        // can you guess what this does?
         private void ResetAll()
         {
             storeTrue = false;
@@ -449,6 +469,7 @@ namespace Calculator
             answerMade = true;
         }
         
+        // puts the result of the last calculation in the text box
         private void Ansbtn_Click(object sender, RoutedEventArgs e)
         {
             TextChange();
@@ -528,6 +549,7 @@ namespace Calculator
                     No3 = No1 % No2;
                     break;
                 case 6:
+                    // at the time i wasnt sure how to convert from int to double
                     double No1doub = No1;
                     double No2doub = No2;
                     No3 = (float)(Math.Pow(No1doub, No2doub));
@@ -742,6 +764,7 @@ namespace Calculator
         {
             try
             {
+                // does two different things depending on if alpha was pressed
                 if (alphaTrue)
                 {
                     TextChange();
@@ -825,6 +848,7 @@ namespace Calculator
             }
         }
 
+        // this rounds the number down
         private void Floor_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -912,6 +936,7 @@ namespace Calculator
             }
         }
 
+        // makes sure that shift and alpha cant both be true 
         private void Shift_Click(object sender, RoutedEventArgs e)
         {
             storeTrue = false;
@@ -950,6 +975,7 @@ namespace Calculator
             }
         }
 
+        // puts the symbol on the top left
         private void ChangeShiftAlpha()
         {
             if (alphaTrue)
@@ -1030,6 +1056,10 @@ namespace Calculator
             }
         }
 
+        // with the trigonometric functions i was going to make it possible to press it before the number was typed but ran out of time
+        // so yu have to do the opposite
+
+        // shift calculates the inverse
         private void Tan_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -1403,6 +1433,7 @@ namespace Calculator
                 {
                     if(opNo == 1 && float.Parse(Answertxt.Text) > 20)
                     {
+                        // cant have a number too high as then it would give an absurdly high result
                         Answertxt.Text = "Error - Number Too High";
                         ResetAll();
                         answerMade = true;
@@ -1422,6 +1453,8 @@ namespace Calculator
                         }
                         if (opNo == 1)
                         {
+
+                            // my first loop in this project - yay
                             float tempFact = 1;
                             for (int i = 1; i < float.Parse(temp1Str) + 1; i++)
                             {
@@ -1429,7 +1462,6 @@ namespace Calculator
                             }
                             temp1Str = tempFact.ToString();
                             Answertxt.Text += "!";
-                            //Answertxt.Text = temp1Str;
                         }
                         else if (opNo == 2)
                         {
@@ -1438,36 +1470,8 @@ namespace Calculator
                             {
                                 tempFact *= i;
                             }
-                            //temp2Str = Math.Floor(double.Parse(temp2Str)).ToString();
                             temp2Str = tempFact.ToString();
                             Answertxt.Text += "!";
-                            //Answertxt.Text = temp1Str;
-                            /*
-                            switch (whatOperator)
-                            {
-                                case 1:
-                                    Answertxt.Text += " + ";
-                                    break;
-                                case 2:
-                                    Answertxt.Text += " - ";
-                                    break;
-                                case 3:
-                                    Answertxt.Text += " * ";
-                                    break;
-                                case 4:
-                                    Answertxt.Text += " / ";
-                                    break;
-                                case 5:
-                                    Answertxt.Text += " % ";
-                                    break;
-                                case 6:
-                                    Answertxt.Text += " ^ ";
-                                    break;
-                                default:
-                                    break;
-                            }
-                             */
-                            //Answertxt.Text += temp2Str;
                         }
                     }
                 }
@@ -1478,6 +1482,13 @@ namespace Calculator
                 ResetAll();
                 answerMade = true;
             }
+        }
+
+        // opens a new window with the best part of the calculator - it isnt a game ;)
+        private void gamebtn_Click(object sender, RoutedEventArgs e)
+        {
+            var form1 = new Form1();
+            form1.Show();
         }
     }
 }
